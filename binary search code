@@ -1,0 +1,114 @@
+"""
+Binary Search with Time Complexity Analyzer
+
+This program:
+1. Takes a sorted list of integers from the user.
+2. Searches for a given element using Binary Search.
+3. Counts the number of comparisons.
+4. Displays the time and space complexity.
+"""
+
+
+def binary_search(arr, key):
+    """Perform binary search and return position and comparisons."""
+
+    low = 0
+    high = len(arr) - 1
+    comparisons = 0
+
+    while low <= high:
+        mid = (low + high) // 2
+        comparisons += 1
+
+        if arr[mid] == key:
+            return mid + 1, comparisons
+
+        elif arr[mid] < key:
+            low = mid + 1
+
+        else:
+            high = mid - 1
+
+    return -1, comparisons
+
+
+def main():
+    print("===================================")
+    print("     BINARY SEARCH ANALYZER")
+    print("===================================")
+
+    # Get number of elements
+    while True:
+        try:
+            n = int(input("\nEnter the number of elements: "))
+
+            if n <= 0:
+                print("Please enter a positive number.")
+                continue
+
+            break
+
+        except ValueError:
+            print("Please enter a valid integer.")
+
+    # Get sorted array
+    arr = []
+
+    print("\nEnter the elements in SORTED order:")
+
+    for i in range(n):
+        while True:
+            try:
+                element = int(input(f"Enter element {i + 1}: "))
+                arr.append(element)
+                break
+
+            except ValueError:
+                print("Please enter a valid integer.")
+
+    # Check if array is sorted
+    if arr != sorted(arr):
+        print("\nError: The elements must be entered in sorted order.")
+        return
+
+    # Get search element
+    while True:
+        try:
+            key = int(input("\nEnter the element to search: "))
+            break
+
+        except ValueError:
+            print("Please enter a valid integer.")
+
+    # Perform binary search
+    position, comparisons = binary_search(arr, key)
+
+    # Display search result
+    print("\n===================================")
+    print("          SEARCH RESULT")
+    print("===================================")
+
+    if position != -1:
+        print(f"Element {key} found at position: {position}")
+    else:
+        print(f"Element {key} was not found.")
+
+    # Time complexity analyzer
+    print("\n===================================")
+    print("     TIME COMPLEXITY ANALYZER")
+    print("===================================")
+
+    print(f"Number of elements     : {n}")
+    print(f"Comparisons performed  : {comparisons}")
+
+    print("\nTheoretical Complexity:")
+    print("Best Case              : O(1)")
+    print("Average Case           : O(log n)")
+    print("Worst Case             : O(log n)")
+    print("Space Complexity       : O(1)")
+
+    print("\n===================================")
+
+
+if __name__ == "__main__":
+    main()
