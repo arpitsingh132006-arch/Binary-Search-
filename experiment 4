@@ -1,0 +1,40 @@
+##huffman  4
+
+#include <bits/stdc++.h>
+using namespace std;
+struct Node {
+    char ch;
+    int f;
+    Node *l, *r;
+    Node(char c, int x) : ch(c), f(x), l(NULL), r(NULL) {}
+};
+struct cmp {
+    bool operator()(Node* a, Node* b) {
+        return a->f > b->f;
+    }
+};
+void print(Node* root, string s) {
+    if (!root) return;
+    if (!root->l && !root->r)
+        cout << root->ch << " : " << s << endl;
+    print(root->l, s + "0");
+    print(root->r, s + "1");
+}
+int main() {
+    char ch[] = {'A','B','C','D','E','F'};
+    int f[] = {5,9,12,13,16,45};
+    priority_queue<Node*, vector<Node*>, cmp> q;
+    for (int i = 0; i < 6; i++)
+        q.push(new Node(ch[i], f[i]));
+    while (q.size() > 1) {
+        Node *a = q.top(); q.pop();
+        Node *b = q.top(); q.pop();
+        Node *p = new Node('$', a->f + b->f);
+        p->l = a;
+        p->r = b;
+        q.push(p);
+    }
+
+
+    print(q.top(), "");
+}
